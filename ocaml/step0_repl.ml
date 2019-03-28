@@ -1,4 +1,7 @@
 #use "topfind";;
+
+#load "readline.cma";;
+
 #require "lwt";;
 #require "base";;
 #require "stdio";;
@@ -17,11 +20,14 @@ let rep str =
 
 
 let rec main () =
-  Stdio.printf "user> ";
-  Stdio.Out_channel.flush Stdio.stdout;
-  let line = Stdio.In_channel.input_line Stdio.stdin in
+  let line = Readline.readline "user> " in
   match line with
-  | Some line -> Stdio.printf "%s\n" (rep line); main ()
+  | Some line -> begin
+      Readline.add_history line;
+      Stdio.printf "%s\n" (rep line);
+      Stdio.Out_channel.flush Stdio.stdout;
+      main ()
+    end
   | None -> ()
 
 let () =
