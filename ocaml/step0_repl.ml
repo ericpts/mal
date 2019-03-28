@@ -1,23 +1,28 @@
-(*
-  To try things at the ocaml repl:
-  rlwrap ocaml
+#use "topfind";;
+#require "lwt";;
+#require "base";;
+#require "stdio";;
 
-  To see type signatures of all functions:
-  ocamlc -i step0_repl.ml
-
-  To run the program:
-  ocaml step0_repl.ml
-*)
+open Base
 
 let read str = str
-let eval ast any = ast
-let print exp = exp
-let rep str = print (eval (read str) "")
 
-let rec main =
-  try
-    while true do
-      print_string "user> ";
-      print_endline (rep (read_line ()));
-    done
-  with End_of_file -> ()
+let eval ast env = ast
+
+let print exp = exp
+
+let rep str =
+  let result = eval (read str) "" in
+  print result
+
+
+let rec main () =
+  Stdio.printf "user> ";
+  Stdio.Out_channel.flush Stdio.stdout;
+  let line = Stdio.In_channel.input_line Stdio.stdin in
+  match line with
+  | Some line -> Stdio.printf "%s\n" (rep line); main ()
+  | None -> ()
+
+let () =
+  main ()
