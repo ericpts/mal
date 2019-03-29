@@ -1,0 +1,2 @@
+
+type mal_type

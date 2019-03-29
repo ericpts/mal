@@ -1,2 +1,4 @@
 #!/bin/bash
-exec ocaml $(dirname $0)/${STEP:-stepA_mal}.ml "${@}"
+
+# exec dune exec $(dirname $0)/${STEP:-stepA_mal}.exe "${@}"
+exec dune exec ./${STEP:-stepA_mal}.exe "${@}"

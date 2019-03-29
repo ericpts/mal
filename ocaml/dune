@@ -1,0 +1,8 @@
+(executable
+  (name step0_repl)
+  (libraries base stdio readline)
+)
+
+(env
+  (dev
+    (flags (:standard -warn-error -A))))

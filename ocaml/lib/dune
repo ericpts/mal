@@ -1,0 +1,5 @@
+(library
+  (name readline)
+  (c_names readline_stubs)
+  (c_library_flags (-lreadline))
+)

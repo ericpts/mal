@@ -1,6 +1,12 @@
-(*
+#use "topfind";;
+
 #load "readline.cma";;
-*)
+
+#require "lwt";;
+#require "base";;
+#require "stdio";;
+
+open Base
 
 let read str = str
 
