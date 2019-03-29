@@ -1,6 +1,8 @@
-(executable
-  (name step0_repl)
-  (libraries base stdio readline)
+(executables
+  (names step0_repl step1_read_print
+  )
+  (libraries base stdio readline pcre core)
+  (preprocess (pps ppx_jane))
 )
 
 (env

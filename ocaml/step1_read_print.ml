@@ -1,14 +1,6 @@
-#use "topfind";;
 
-#load "readline.cma";;
-
-#require "lwt";;
-#require "base";;
-#require "stdio";;
-
-open Base
-
-let read str = str
+let read str =
+  Reader.read_str str
 
 let eval ast env = ast
 
@@ -16,7 +8,7 @@ let print exp = exp
 
 let rep str =
   let result = eval (read str) "" in
-  print result
+  Printer.pr_str result
 
 
 let rec main () =
