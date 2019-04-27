@@ -24,4 +24,4 @@ let rec find env k =
 let find_exn env k =
   match find env k with
   | Some v -> v
-  | None -> raise (Failure ("failed to locate key " ^ k ^ " in env"))
+  | None -> raise (Failure ("key " ^ k ^ " not found"))
