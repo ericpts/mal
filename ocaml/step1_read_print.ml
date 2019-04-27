@@ -1,3 +1,4 @@
+open Base
 
 let read str =
   Reader.read_str str
@@ -7,8 +8,11 @@ let eval ast env = ast
 let print exp = exp
 
 let rep str =
-  let result = eval (read str) "" in
-  Printer.pr_str result
+  try
+    let result = eval (read str) "" in
+    Printer.pr_str result
+  with
+  Failure f -> Printf.sprintf "error: %s\n" f
 
 
 let rec main () =

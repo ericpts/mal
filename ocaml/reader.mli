@@ -13,6 +13,6 @@ val read_str : string -> Types.mal_type
 
 val read_form : reader -> (Types.mal_type * reader)
 
-val read_list : reader -> (Types.mal_type * reader)
+val read_list : reader -> string -> (Types.mal_type * reader)
 
 val read_atom : reader -> (Types.mal_type * reader)
