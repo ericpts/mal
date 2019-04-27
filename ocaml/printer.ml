@@ -5,6 +5,7 @@ let rec pr_str = function
   | Types.MalSymbol s -> s
   | Types.MalNum n -> Int.to_string n
   | Types.MalString s -> "\"" ^ s ^ "\""
+  | Types.MalNil -> "<nil>"
   | Types.MalList lst ->
     begin
       List.map ~f:pr_str lst
