@@ -28,22 +28,29 @@ let read str =
 let rec eval_ast ast env =
   match ast with
   | Types.MalList lst -> List.map ~f:(fun ast -> eval ast env) lst |> Types.MalList
+  | Types.MalVec vec -> List.map ~f:(fun ast -> eval ast env) vec |> Types.MalVec
+  | Types.MalString s -> Types.MalString s
   | Types.MalSymbol sym -> env sym
-  | x -> x
+  | Types.MalKeyword kw -> Types.MalKeyword kw
+  | Types.MalNum num -> Types.MalNum num
+  | Types.MalFn fn -> Types.MalFn fn
+  | Types.MalHashMap hm -> List.Assoc.map ~f:(fun ast -> eval ast env) hm |> Types.MalHashMap
 and
   eval ast env =
   match ast with
-  | Types.MalList [] -> Types.MalList []
-  | Types.MalList _ -> begin
-    let eval_lst = eval_ast ast env in
-    match eval_lst with
-    | Types.MalList (fn::rst) -> begin
-        match fn with
-        | Types.MalFn fn -> (fn rst)
-        | _ -> raise (Failure ("cannot call " ^ (Printer.pr_str fn) ^ " as function"))
-      end
-    | _ -> raise (Failure ("failed to parse list" ^ (Printer.pr_str ast)))
-  end
+  | Types.MalList lst -> begin
+      match lst with
+      | [] -> Types.MalList []
+      | _::_ ->
+        let eval_lst = eval_ast ast env in
+        match eval_lst with
+        | Types.MalList (fn::rst) -> begin
+            match fn with
+            | Types.MalFn fn -> (fn rst)
+            | _ -> raise (Failure ("cannot call " ^ (Printer.pr_str fn) ^ " as function"))
+          end
+        | _ -> raise (Failure ("failed to parse list" ^ (Printer.pr_str ast)))
+    end
   | _ -> eval_ast ast env
 
 

@@ -3,7 +3,7 @@ open Base
 let read str =
   Reader.read_str str
 
-let eval ast env = ast
+let eval ast _ = ast
 
 let print exp = exp
 

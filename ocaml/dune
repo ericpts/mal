@@ -7,7 +7,3 @@
   (libraries base stdio readline pcre core)
   (preprocess (pps ppx_jane))
 )
-
-(env
-  (dev
-    (flags (:standard -warn-error -A))))
